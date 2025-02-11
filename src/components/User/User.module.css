@@ -1,0 +1,39 @@
+.user {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  background-color: rgb(235, 235, 235);
+  border-radius: 20px;
+  border: 1px solid rgba(10, 10, 10, 1);
+  height: 150px;
+  width: 98px;
+}
+
+.user_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.user_avatar {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
+
+.user_position {
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(140, 140, 140, 1);
+}
+
+.user_name {
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: rgba(31, 31, 31, 1);
+}
