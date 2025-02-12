@@ -3,6 +3,8 @@
   display: flex;
   gap: 24px;
   flex-direction: column;
+  background-color: var(--profile-bg-color);
+  height: calc(100vh - 60px);
 }
 
 .container {

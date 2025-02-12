@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import Profile from '../../components/Profile/Profile';
-import { useStore } from '../../utils/store';
 
 import styles from './profilePage.module.css';
 
-function ProfilePage() {
+import Profile from '../../components/Profile/Profile';
+
+function ProfilePage(): React.JSX.Element {
   const navigate = useNavigate();
-  const user = useStore((state) => state.user);
 
   const handleClick = () => {
     navigate(-1);
@@ -18,7 +17,7 @@ function ProfilePage() {
         <h2>Profile detail information</h2>
         <button onClick={handleClick}>Back</button>
       </div>
-      <Profile user={user} />
+      <Profile />
     </div>
   );
 }

@@ -17,3 +17,19 @@ code {
   padding: 0;
   box-sizing: border-box;
 }
+
+body.light {
+  --bg-color: rgba(235, 235, 235, 1);
+  --flow-bg-color: rgba(215, 215, 215, 1);
+  --header-bg-color: rgba(205, 205, 205, 1);
+  --profile-bg-color: rgba(195, 195, 195, 1);
+  color: rgba(20, 20, 20, 1);
+}
+
+body.dark {
+  --bg-color: rgba(20, 20, 20, 1);
+  --flow-bg-color: rgba(40, 40, 40, 1);
+  --header-bg-color: rgba(50, 50, 50, 1);
+  --profile-bg-color: rgba(60, 60, 60, 1);
+  color: rgba(235, 235, 235, 1);
+}

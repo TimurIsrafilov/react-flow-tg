@@ -1,15 +1,15 @@
+import { useEffect } from 'react';
 import { ReactFlow, useNodesState, useEdgesState } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import dagre from '@dagrejs/dagre';
 
 import styles from './Flow.module.css';
 
-import User from '../User/User.tsx';
+import User from '../User/User';
 
 import { useStore } from '../../utils/store';
-import { useEffect } from 'react';
 
-const Flow = () => {
+function Flow(): React.JSX.Element {
   const nodeTypes = {
     user_card: User,
   };
@@ -21,20 +21,20 @@ const Flow = () => {
 
   const nodeWidth = 60;
   const nodeHeight = 60;
-
+  //@ts-ignore
   const getLayoutedElements = (nodes, edges) => {
     dagreGraph.setGraph({});
-
+    //@ts-ignore
     nodes.forEach((node) => {
       dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
     });
-
+    //@ts-ignore
     edges.forEach((edge) => {
       dagreGraph.setEdge(edge.source, edge.target);
     });
 
     dagre.layout(dagreGraph);
-
+    //@ts-ignore
     const newNodes = nodes.map((node) => {
       const nodeWithPosition = dagreGraph.node(node.id);
       const newNode = {
@@ -65,15 +65,9 @@ const Flow = () => {
 
   return (
     <div className={styles.flow}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        fitView
-        style={{ backgroundColor: '#F7F9FB' }}
-      />
+      <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView />
     </div>
   );
-};
+}
 
 export default Flow;

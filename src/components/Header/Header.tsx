@@ -1,9 +1,17 @@
 import styles from './Header.module.css';
 
-function Header({ userData }: any): React.JSX.Element {
+import { useStore } from '../../utils/store';
+import { useTheme } from '../../hooks/ThemeContext';
+
+function Header(): React.JSX.Element {
+  const { userTg, colorThemeTg } = useStore();
+  const { toggleTheme } = useTheme();
+
   return (
     <div className={styles.header}>
-      <h1>{userData}</h1>
+      <h3>{`You logged-in as: ${userTg?.first_name} ${userTg?.last_name}`}</h3>
+      {colorThemeTg && <h4>{`color theme is: ${colorThemeTg}`}</h4>}
+      <button onClick={toggleTheme}>Переключить тему</button>
     </div>
   );
 }
