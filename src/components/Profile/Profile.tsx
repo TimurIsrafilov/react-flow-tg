@@ -8,7 +8,7 @@ type ProfileProps = {
   user: TypeUser;
 };
 
-function Profile({ user }: ProfileProps) {
+function Profile({ user }: ProfileProps): React.JSX.Element {
   const boss = users.find((item) => item.id === (user?.bossId || 0));
   const team = users.filter((item) => item.bossId === user?.id);
   console.log(team);

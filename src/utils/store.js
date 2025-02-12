@@ -18,11 +18,11 @@ export const useStore = create((set, get) => {
         photo: `https://randomuser.me/api/portraits/${item.gender}/${item.id}.jpg`,
         position: item.position,
         grade: item.grade,
-        bossId: `${item.bossId}`, // Преобразуем bossId в строку
+        bossId: `${item.bossId || 'null'}`, // Преобразуем null в строку
       },
     });
 
-    if (item.bossId) {
+    if (item.bossId !== null) {
       initialEdges.push({
         id: `e${item.id}-${item.bossId}`,
         source: `${item.id}`,
@@ -31,71 +31,59 @@ export const useStore = create((set, get) => {
     }
   });
 
-  // Рекурсивная функция для получения всех подчинённых
-  const getSubordinates = (bossId) => {
-    const subordinates = users
-      .filter((user) => `${user.bossId}` === `${bossId}`) // Преобразуем оба в строки
-      .map((user) => `${user.id}`); // id как строка
-
-    return subordinates.reduce((acc, subordinateId) => {
-      return acc.concat(subordinateId, getSubordinates(subordinateId)); // Рекурсивно добавляем подчинённых
-    }, []);
-  };
-
   // Функция для удаления сотрудников с учетом их подчинённых
   const getAllSubordinatesToHide = (id) => {
-    const subordinatesToHide = getSubordinates(id); // Получаем всех подчинённых для выбранного босса
-    const subordinatesWithBossId = users.filter((user) =>
-      subordinatesToHide.includes(`${user.bossId}`)
-    ); // Сотрудники, чьи bossId есть в списке подчинённых
+    const getSubordinates = (bossId) => {
+      const subordinates = users
+        .filter((user) => `${user.bossId}` === `${bossId}`)
+        .map((user) => `${user.id}`);
+      return subordinates.reduce((acc, subordinateId) => {
+        return acc.concat(subordinateId, getSubordinates(subordinateId));
+      }, []);
+    };
 
-    // Добавляем этих сотрудников в список для удаления и рекурсивно добавляем их подчинённых
-    const finalSubordinatesToHide = subordinatesWithBossId.reduce(
-      (acc, user) => {
-        return acc.concat(`${user.id}`, getSubordinates(user.id)); // Добавляем их и их подчинённых
-      },
-      subordinatesToHide
-    );
-
+    const subordinatesToHide = getSubordinates(id);
+    const finalSubordinatesToHide = subordinatesToHide.reduce((acc, userId) => {
+      return acc.concat(userId, getSubordinates(userId));
+    }, subordinatesToHide);
     return finalSubordinatesToHide;
   };
 
   const toggleVisibilityById = (id) => {
     set((state) => {
-      const updatedSortedIds = state.sortedIds.includes(id)
-        ? state.sortedIds.filter((item) => item !== id) // Убираем из списка
-        : [...state.sortedIds, id]; // Добавляем в список
+      // Проверка, добавлен ли уже id в toggledNodes
+      const isAlreadyToggled = state.toggledNodes.includes(id);
 
-      // Получаем окончательный список подчинённых для выбранного босса и его подчинённых
+      const updatedToggledNodes = isAlreadyToggled
+        ? state.toggledNodes.filter((item) => item !== id) // Убираем из массива
+        : [...state.toggledNodes, id]; // Добавляем в массив
+
+      // Получаем всех подчинённых, которых нужно скрыть
       const subordinatesToHide = getAllSubordinatesToHide(id);
 
-      // Логируем для проверки
-      console.log('Subordinates to hide:', subordinatesToHide);
-
-      // Добавляем новые скрытые сотрудники в список, не очищая его
-      const updatedHiddenNodes = [...state.hiddenNodes, ...subordinatesToHide];
+      // Обновляем список скрытых узлов
+      const updatedHiddenNodes = isAlreadyToggled
+        ? state.hiddenNodes.filter((node) => !subordinatesToHide.includes(node))
+        : [...state.hiddenNodes, ...subordinatesToHide];
 
       // Фильтруем узлы:
       const filteredNodes = initialNodes.filter(
-        (node) => !updatedHiddenNodes.includes(node.id) // id должно быть строкой
+        (node) => !updatedHiddenNodes.includes(node.id) || node.id === '11' // Главный пользователь всегда видим
       );
 
-      // Фильтруем рёбра (edges), удаляя те, которые связаны с удалёнными сотрудниками:
+      // Фильтруем рёбра:
       const filteredEdges = initialEdges.filter(
         (edge) =>
           filteredNodes.some((node) => node.id === edge.source) &&
           filteredNodes.some((node) => node.id === edge.target)
       );
 
-      // Логируем для проверки
-      console.log('Filtered nodes:', filteredNodes);
-      console.log('Filtered edges:', filteredEdges);
-
       return {
-        sortedIds: updatedSortedIds,
-        storeNodes: filteredNodes, // Обновляем только видимые узлы
-        storeEdges: filteredEdges, // Обновляем только видимые рёбра
-        hiddenNodes: updatedHiddenNodes, // Сохраняем новые скрытые узлы
+        sortedIds: updatedToggledNodes, // обновляем список сортировки
+        storeNodes: filteredNodes, // обновляем узлы
+        storeEdges: filteredEdges, // обновляем рёбра
+        hiddenNodes: updatedHiddenNodes, // обновляем скрытые узлы
+        toggledNodes: updatedToggledNodes, // обновляем массив toggledNodes
       };
     });
   };
@@ -106,6 +94,7 @@ export const useStore = create((set, get) => {
     storeNodes: initialNodes,
     storeEdges: initialEdges,
     hiddenNodes: [], // Начальный пустой список скрытых узлов
+    toggledNodes: [], // Новый массив для отслеживания нажатых узлов
     sortedIds: [], // Массив для сортировки сотрудников
     toggleVisibilityById, // Функция для сортировки/показа сотрудников
     setNodes: (newNodes) => set(() => ({ nodes: newNodes })),

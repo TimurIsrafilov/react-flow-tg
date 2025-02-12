@@ -1,15 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { Handle, Position } from '@xyflow/react';
-
 import styles from './User.module.css';
-
 import { useStore } from '../../utils/store';
 
-function User({ data }) {
+import { TypeUser } from '../../types/types';
+
+type UserProps = {
+  data: TypeUser;
+};
+
+function User({ data }: UserProps): React.JSX.Element {
   const navigate = useNavigate();
   const setUser = useStore((state) => state.setUser);
   const toggleVisibilityById = useStore((state) => state.toggleVisibilityById);
-  const sortedIds = useStore((state) => state.sortedIds);
+  const toggledNodes = useStore((state) => state.toggledNodes);
+  const isNodeToggled = toggledNodes && toggledNodes.includes(data.id);
 
   const handleClick = () => {
     setUser(data);
@@ -33,12 +38,15 @@ function User({ data }) {
           <Handle type="target" position={Position.Bottom} />
         )}
       </button>
-      <button
-        className={styles.sort_btn}
-        onClick={() => toggleVisibilityById(data.id)}
-      >
-        {!sortedIds.includes(data.id) ? 'Remove' : 'Add'}
-      </button>
+
+      {data.grade !== 4 && (
+        <button
+          className={styles.button}
+          onClick={() => toggleVisibilityById(data.id)}
+        >
+          {isNodeToggled ? 'Add' : 'Remove'}{' '}
+        </button>
+      )}
     </div>
   );
 }

@@ -6,10 +6,16 @@ import { HOME, NUMBER, USER } from '../../utils/constants';
 import Header from '../Header/Header';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 
-function App() {
+function App(): React.JSX.Element {
+  //@ts-ignore
+  let tg = window.Telegram?.WebApp;
+  console.log(tg);
+  const userData = tg ? tg.initDataUnsafe.user : null;
+  console.log(userData);
+
   return (
     <div className="App">
-      <Header />
+      <Header userData={userData} />
       <Routes>
         <Route path={HOME} element={<Flow />} />
         <Route path={`${USER}${NUMBER}`} element={<ProfilePage />} />

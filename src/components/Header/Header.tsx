@@ -1,9 +1,9 @@
 import styles from './Header.module.css';
 
-function Header(): React.JSX.Element {
+function Header({ userData }: any): React.JSX.Element {
   return (
     <div className={styles.header}>
-      <h1>Company chart</h1>
+      <h1>{userData}</h1>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import dagre from '@dagrejs/dagre';
 
 import styles from './Flow.module.css';
 
-import User from '../User/User';
+import User from '../User/User.tsx';
 
 import { useStore } from '../../utils/store';
 import { useEffect } from 'react';
@@ -23,10 +23,6 @@ const Flow = () => {
   const nodeHeight = 60;
 
   const getLayoutedElements = (nodes, edges) => {
-    if (!nodes || !edges) {
-      return { nodes: [], edges: [] };
-    }
-
     dagreGraph.setGraph({});
 
     nodes.forEach((node) => {
@@ -44,7 +40,7 @@ const Flow = () => {
       const newNode = {
         ...node,
         position: {
-          x: nodeWithPosition.x - nodeWidth / 2,
+          x: nodeWithPosition.x - nodeWidth,
           y: node.data.grade * 220,
         },
       };
@@ -75,7 +71,7 @@ const Flow = () => {
         nodeTypes={nodeTypes}
         fitView
         style={{ backgroundColor: '#F7F9FB' }}
-      ></ReactFlow>
+      />
     </div>
   );
 };
