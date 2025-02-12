@@ -11,7 +11,7 @@ function Header(): React.JSX.Element {
     <div className={styles.header}>
       <h3>{`You logged-in as: ${userTg?.first_name} ${userTg?.last_name}`}</h3>
       {colorThemeTg && <h4>{`color theme is: ${colorThemeTg}`}</h4>}
-      <button onClick={toggleTheme}>Переключить тему</button>
+      <button onClick={toggleTheme}>Change theme</button>
     </div>
   );
 }

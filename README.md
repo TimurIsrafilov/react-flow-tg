@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# Telegram nini app and Web app of the company structure
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project description:
 
-## Available Scripts
+A flow-chart to observe information about your colleagues
 
-In the project directory, you can run:
+## The app can be started at Telegram by the bot direct link:
 
-### `npm start`
+[https://t.me/reactflowtestingbot/flowchart/](https://t.me/reactflowtestingbot/flowchart/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## The app is deployed at GitHub Pages by the following link:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+[https://timurisrafilov.github.io/react-flow-tg/](https://timurisrafilov.github.io/react-flow-tg/)
 
-### `npm test`
+## Build commands:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+clone repository
 
-### `npm run build`
+```bash
+git clone https://github.com/TimurIsrafilov/react-flow-tg.git
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+go to project folder
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+cd react-flow-tg
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+install dependencies
 
-### `npm run eject`
+```bash
+npm i
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Commands for app run:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+run dev mode
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+npm start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Open [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+run prod mode
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+run prod mode
+
+```bash
+npm run build
+```
+
+## Stack of technologies used:
+
+- <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" title="reactjs" alt="reactjs" width="20" height="20"/> - **ReactJS** - библиотека JavaScript [https://react.dev/](https://react.dev/)
+- <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="typescript" alt="typescript" width="20" height="20"/> - **TypeScript** - система статической типизации для JS [https://www.typescriptlang.org/](https://www.typescriptlang.org/)
+- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpHj4UwTW4ANSlNjzQOiiOqfDa6kal9RpF0A&s" title="zustand" alt="zustand" width="20" height="20"/> - **Zustand** - стейт-менеджер [https://zustand.docs.pmnd.rs](https://zustand.docs.pmnd.rs)
+
+## Implemented functionality:
+
+- штатная структура построена на основе моковых данных
+- можно скрыть и показать сотрудников
+- можно посмотреть детальную информацию о сотруднике
+- приложение можно запустить как в телеграмме так и в веб приложении
+- при использовании в телеграмме должны автоматически подтягиваться данные пользователя и цветовая тема
+
+## What can be improved:
+
+- применена библиотаке dagre, которая высчитывает оптимальное раположение сотрудников на рабчем пространстве,
+  что влияет на пересчет расположения сотрудников при отключении / включении группы сотрудников
+  желательно изменить подход для создании приложения с более корретным отражениея изменений

@@ -1,6 +1,5 @@
-// ThemeContext.tsx
 import React, { createContext, useContext, ReactNode, useEffect } from 'react';
-import { useStore } from '../utils/store'; // Импортируем Zustand store
+import { useStore } from '../utils/store';
 
 type Theme = 'light' | 'dark';
 
@@ -9,7 +8,6 @@ interface ThemeContextType {
   toggleTheme: () => void;
 }
 
-// Контекст с дефолтным значением
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
@@ -19,16 +17,15 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const { colorThemeTg, setColorThemeTg } = useStore();
 
-  // Функция для переключения темы
   const toggleTheme = () => {
     setColorThemeTg(colorThemeTg === 'light' ? 'dark' : 'light');
   };
 
   useEffect(() => {
     if (colorThemeTg) {
-      document.body.className = colorThemeTg; // Убедимся, что значение не null или undefined
+      document.body.className = colorThemeTg;
     } else {
-      document.body.className = 'light'; // Устанавливаем тему по умолчанию
+      document.body.className = 'light';
     }
   }, [colorThemeTg]);
 
@@ -39,7 +36,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   );
 };
 
-// Хук для использования контекста
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
