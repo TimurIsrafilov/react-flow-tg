@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/react-flow-tg/static/css/main.f9b463bd.css",
-    "main.js": "/react-flow-tg/static/js/main.7d019d92.js",
+    "main.css": "/react-flow-tg/static/css/main.0539c395.css",
+    "main.js": "/react-flow-tg/static/js/main.7018f6ed.js",
     "index.html": "/react-flow-tg/index.html",
-    "main.f9b463bd.css.map": "/react-flow-tg/static/css/main.f9b463bd.css.map",
-    "main.7d019d92.js.map": "/react-flow-tg/static/js/main.7d019d92.js.map"
+    "main.0539c395.css.map": "/react-flow-tg/static/css/main.0539c395.css.map",
+    "main.7018f6ed.js.map": "/react-flow-tg/static/js/main.7018f6ed.js.map"
   },
   "entrypoints": [
-    "static/css/main.f9b463bd.css",
-    "static/js/main.7d019d92.js"
+    "static/css/main.0539c395.css",
+    "static/js/main.7018f6ed.js"
   ]
 }
